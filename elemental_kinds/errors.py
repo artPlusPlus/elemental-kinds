@@ -1,4 +1,4 @@
-from elemental_core.errors import ElementalError
+from elemental_core import ElementalError
 
 
 class AttributeKindError(ElementalError):
