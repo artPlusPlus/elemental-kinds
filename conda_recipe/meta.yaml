@@ -1,0 +1,30 @@
+package:
+  name: elemental-kinds
+  version: "0.1.0dev1"
+
+source:
+  path: ../
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - elemental-core
+  run:
+    - python
+    - elemental-core
+
+test:
+  requires:
+    - pytest
+  imports:
+    - elemental_kinds
+
+about:
+  home: https://github.com/artplusplus/elemental-kinds.
+  summary: elemental-kinds is a collection of Attribute Kind classes.
+  license: Mozilla Public License 2.0 (MPL 2.0)
+  license_file: LICENSE
