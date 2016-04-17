@@ -7,6 +7,7 @@ engine:
   - python=3.5
 script:
   - conda config --add channels artplusplus
+  - conda info -a
   - conda build ./conda_recipe
 build_targets:
   - conda
