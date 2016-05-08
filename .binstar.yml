@@ -1,13 +1,11 @@
 package: elemental-kinds
 platform:
   - linux-64
-  - win-64
-  - osx-64
 engine:
   - python=3.5
 script:
   - conda config --add channels artplusplus
   - conda info -a
-  - conda build ./conda_recipe
+  - conda build ./.conda.recipe
 build_targets:
   - conda
