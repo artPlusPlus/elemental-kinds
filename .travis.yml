@@ -1,27 +1,17 @@
 language: python
+
+env:
+  global:
+    secure: RDPr0zsnQwy3nh3XknGWKJm4hlAmd+FvA0ilJSLWpkS260HF3vzEw9fnTneAL8+njcFf1DqGv344y97xASvbT+vuhU2puABc+0dZ5JgiLutGg1JCh39uOfaN/bBDqSMJ9igGr9Z/1Kv+rkQY4K5uAbe6l5+yLHLddhIElX0Q2ou4B+h9N1N/nl+5BOQrCpOPzazMx/2vrUOtFrAjlKIthM8y0lEgnyHvSnvapB3NMcC/Ea+5KpoeNzkZzSiGjHsubIusv2jwJ5sj10I0BgIWESkhjC8LE1Ul9GZUFN8qP/7H4fAxF4WghDrtDHARngXo0Qv4WkMd1e/Bq9aSAfikhkUpDAgy1sWyUt8td5IOeLMZGnhTZL8eyEdzqWEtD2zDRShiA80s5eQKFhGAEjwBJ9BnBszYr/XwC7xcFHpdPV3M4bsQy750LeMrVlSUBoISea/Jjie4OPmhD+y1kfc/TTSpQhZLfHxtU8sOhUxBc6Iisg8Ngi1IF+w/PGK/fAZ9CV88Kj+7zVzMunPpQgo0FRJtm03VX0NR/RXq8m/eXEd1uz+PqAwlUHFX6QPB48sw+jS4LOO6EkOlwuTbYSRAOyGSVWfvK2LvJvs48j+MaqAc+X0I6AOj3/5OOJp+Vc2NFk/XteQ0vL5BuO43g0Zlm/gdf43odiQvlUIuvqeljXw=
+
 python:
-  - "3.5"
-before_install:
-  - sudo apt-get update -qq
-  # We do this conditionally because it saves us some downloading if the
-  # version is the same.
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-    fi
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
-  - conda config --add channels artplusplus
-  - conda update -q conda
-  - conda install -q conda-build
-  - conda info -a
+  - '3.5'
+
 install:
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION pytest
-  - source activate test-environment
-  - conda build ./.conda.recipe
-  - conda install --use-local elemental-kinds
+  - source ./.ci/travis/install.sh
+
 script:
-  - py.test
+  - source ./.ci/travis/build.sh
+
+after_success:
+  - source ./.ci/travis/deploy.sh
