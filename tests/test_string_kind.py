@@ -56,7 +56,7 @@ class _StringKindValidateParams(object):
 
 @pytest.mark.parametrize('value', _StringKindValidateParams.values)
 @pytest.mark.parametrize('params', _StringKindValidateParams.params)
-def test_integer_kind_validate_value(value, params):
+def test_string_kind_validate_value(value, params):
     test_params, expected_result = params
 
     if inspect.isclass(expected_result) and issubclass(expected_result, Exception):

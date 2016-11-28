@@ -1,8 +1,20 @@
+import operator
+
 from .errors import (
     AttributeKindValueProcessingError,
     AttributeKindValueValidationError
 )
 from ._attribute_kind import AttributeKind
+
+
+_filter_tests = (
+    ('<', operator.lt),
+    ('<=', operator.le),
+    ('>', operator.gt),
+    ('>=', operator.ge),
+    ('==', operator.eq),
+    ('!=', operator.ne)
+)
 
 
 class IntegerKind(AttributeKind):
@@ -35,3 +47,17 @@ class IntegerKind(AttributeKind):
             msg = msg.format(value, maximum)
 
             raise AttributeKindValueValidationError(msg)
+
+    @staticmethod
+    def filter_value(cls, value, **filter_params):
+        result = True
+
+        for symbol, op in _filter_tests:
+            try:
+                op_param = filter_params[symbol]
+            except KeyError:
+                pass
+            else:
+                result = op(value, op_param)
+
+        return result
